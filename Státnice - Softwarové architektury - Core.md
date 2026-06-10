@@ -386,3 +386,180 @@
 	- Odvozování typů:
 		- Explicitní
 		- Implicitní
+# 9. Formální prostředky pro popis vyšších programovacích jazyků – gramatiky a jejich členění, vlastnosti gramatik, způsoby zápisu gramatik a nástroje pro jejich zpracování, využití gramatiky k tvorbě překladače.
+- Gramatika = G = (N, T, S, P)
+	- $P: (N \cup T)^*N(N \cup T) \rightarrow (N \cup T)^*$
+- Jazyk = L(G) = {$w \in T^*$|$S \overset{*}{\implies} w$}
+- **Členění gramatik:**
+	- Typ 0 – $(N \cup T)^*N(N \cup T) \rightarrow (N \cup T)^*$
+		- Turingův stroj
+	- Typ 1 – $\alpha A \beta \rightarrow \alpha \gamma \beta$
+		- Lin. omez. Turingův stroj (velikost paměť je $k \cdot n$, kde $n$ je velikost vstupu)
+	- Typ 2 – $A \rightarrow \alpha$
+		- Nedeter. zásobníkový automat
+	- Typ 3 – $A \rightarrow aB, A \rightarrow a$
+		- Konečný automat
+- **Vlastnosti:**
+	- Jednoznačnost X Víceznačnost
+		- Nutná podmínka jednoznačnosti:
+			- Má levou a pravou rekurzi $\implies$ není jednoznačná
+	- Rekurzivita
+	- Redukovanost
+		- Neproduktivní symboly
+		- Nedosažitelné symboly
+- **Způsoby popisu + nástroje pro zpracování:**
+	- Typ 3
+		- Gramatika, KA, Regex
+		- KA = {$Q, q_0 \in Q, F \subset Q, \Sigma, \delta$}
+		- NKA
+		- Každý NKA lze převést na DKA
+	- Typ 2
+		- Gramatika, PDA, BNF
+		- PDA = {$Q, \Sigma, \Gamma, q_0 \in Q, z_0 \in \Gamma, \delta$}
+- **Využití gramatik pro tvorbu překladače:**
+	- Typ 3
+		- Lexikální analýza
+		- Spojování automatů do jednoho velkého
+	- Typ 2
+		- Syntaktická analýza
+		- Shora dolu
+			- Rekurzivní sestup
+			- PDA – LL(1)
+				- Expanze
+				- Redukce (srovnání)
+			- Greinbachová normální forma => pro ní lze vždy udělat LL(1)
+			- First
+			- Follow
+			- Je LL(1)?
+				- Nesmí mít levou rekurzi
+				- $FIRST(\alpha FOLLOW(A)) \cap FIRST(\beta FOLLOW(A)) = \emptyset$
+					- $\alpha \in (N \cup T)^*$
+					- $A \in N$
+			- First-first kolize
+				- Levá faktorizace
+					- $A \rightarrow \alpha \alpha_1 | \alpha \alpha_2 | \dots$
+					- $A \rightarrow \alpha A'$
+					- $A' \rightarrow \alpha_1 | \alpha_2 | ...$
+			- First-follow kolize
+				- Odstranění $\epsilon$ pravidel
+				- Pohlcení terminálu
+			- Silná vs Obecná
+			- Příklad:
+				- ![[Pasted image 20260603085224.png]]
+		- Zdola nahoru
+			- Operace:
+				- Shift
+				- Reduce
+			- LR
+			- Zpracovává větší třídu jazyků než LL
+			- LR(0)
+				- Stačí mi pouze zásobník k rohodnutí
+				- Graf LR položek
+					- . na konci => shift
+					- . uprostřed => redukuju
+				- Příklad:
+					- ![[Pasted image 20260610085426.png]]
+					- ![[Pasted image 20260610085433.png]]
+			- Když mám kolizi v grafu:
+				- SLR(1) => k rozhodnutí používám i 1 znak na vstupu
+				- Follow v kolizním pravidlu u toho pravidla, kde mám dělat reduce
+			- Když se ani s přečtením vstupu nedokážu rozhodnout:
+				- LALR(1)
+				- Vytvářím si Look aheady
+				- Pokud ve follow množině je ten look ahead tak podle toho pravidla udělám reduce
+# 10. Způsob překladu různých programových konstrukcí vyšších jazyků, překlad příkazů, zpracování deklarací, práce s objekty, volání podprogramů. Přidělování paměti. Interpretační zpracování.
+## Způsob překladu různých programových konstrukcí vyšších jazyků, překlad příkazů, zpracování deklarací, práce s objekty, volání podprogramů. 
+- Vstup: AST
+- Výstup: instrukce
+- Jazyk čtveřic, trojic
+- **Generování instrukcí** – odvíjí se od cílové platformy
+- **Generování kódu** – podobné jako rekurzivní sestup
+- **Překlad příkazů:**
+	- Zpracování konstant
+	- Zpracování aritmetiky
+	- Zpracování podmínek
+- **Zpracování deklarací:**
+	- Nepotřebuje explicitní instrukce
+	- Stačí vymezit místo v paměti pro proměnnou
+- **Práce s objekty:**
+	- Polymorfismus
+	- **Class Instance Record (CIR)**
+		- ![[Pasted image 20260529114030.png]]
+	- **Tabulka skoků**
+		- Jedna pro každou třídu
+		- ![[Pasted image 20260603143906.png]]
+- **Volání podprogramů:**
+	- Aktivační záznam:
+		- Statický ukazatel (kdo deklaroval)
+		- Dynamický ukazatel (kdo volal)
+		- Návratovou adresu
+	- Báze (BP)
+	- Vrchol (SP)
+	- ![[Pasted image 20260529105300.png]]
+	- **Předávání parametrů:**
+		- Výsledkem
+		- Referencí
+		- Hodnotou
+	- **Předávání podprogramů:**
+		- Ad-hoc (prostředí kde je funkce předaná)
+		- Hluboká (prostředí kde je funkce definovaná)
+		- Mělká (prostředí kde je funkce vykonaná/volaná)
+## Přidělování paměti. 
+- Typicky rozdělena na:
+	- Oblast pro program
+	- Oblast pro statický data
+	- Oblast pro zásobník
+	- Oblast pro haldu
+	- ![[Pasted image 20260529120738.png]]
+- **Druhy:**
+	- Statické
+	- Dynamické
+- **Ukládání pole:**
+	- ![[Pasted image 20260610120316.png]]
+	- Po řádcích
+		- $K_1$ = velikost
+		- $K_k = H_{k-1} \times K_{k-1}$
+		- $a[i_1, i_2, i_3, \dots, i_n] = \sum_{k = 1}^{n-1}(i_k * K_K)$
+	- Po sloupcích
+		- $K_1$ = velikost
+		- $K_k = (H_{k-1} - D_{k-1} + 1) \times K_{k-1}$
+		- $a[i_1, i_2, i_3, \dots, i_n] = \sum_{k = 1}^{n}((i_k - D_k) * K_K)$
+- **Ukládání struktur**
+	- Několik položek různých typů seskupených dohromady
+	- ![[Pasted image 20260529130024.png]]
+- **Alokace dynamické paměti:**
+	- **Typy podle zprávy:**
+		- Explicitní (malloc)
+		- Implicitní (new)
+	- **Sledování volného místa:**
+		- **Implicitní seznamy:**
+			- Spojový seznam všech bloků (volných i obsazených)
+			- Př.: na začátku mám paměť o velikosti 100 bytů, někdo udělá `malloc(20)` a v paměti vznikne seznam o dvou blocích, kde jeden má 20 bytů a druhý 80 a je označen jako volný
+			- ![[Pasted image 20260529155724.png]]
+		- **Explicitní seznamy:**
+			- Spojový seznam pouze volných bloků
+			- ![[Pasted image 20260529155800.png]]
+		- **Oddělené explicitní seznamy:**
+			- Různé spojové seznamy pro různě velké třídy bloků
+		- **Bloky řazené podle velikosti:**
+			- Vyvážený strom s ukazateli na další bloky s délkou jako s klíčem
+	- **Algoritmy:**
+		- First-fit
+		- Next-fit
+		- Best-fit
+- **Fragmentace:**
+	- Interní
+	- Externí
+- **Garbage kolekce:**
+	- Mark and Sweep
+	- Stop and Copy
+	- Java
+		- ![[Pasted image 20260529172545.png]]
+		- Pro minor používá Stop and Copy
+		- Pro major používá Mark and Sweep
+## Interpretační zpracování.
+- Celý proces je stejný jako u překladače
+- ![[Pasted image 20260610121410.png]]
+- Rozdíl je pouze v závěrečné fázi
+	- Překladač generuje kód – vytváří soubor s intrukcemi pro CPU
+	- Interpret vykonává program rovnou

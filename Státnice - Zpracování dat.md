@@ -1093,7 +1093,8 @@ RETURN friend
 		- K transformaci lze využít výpočetní výkon a rozsah cloudu
 	- Big Data, Hadoop
 	- Vhodné pro velké data# 8. Principy zpracování přirozeného jazyka – tokenizace, stemming, Porterův algoritmus, lematizace, parsing, slovníky. Modely pro reprezentaci a zpracování rozsáhlých nestrukturovaných dat, vektorový model dokumentu.
-# 8. Principy zpracování přirozeného jazyka – tokenizace, stemming, Porterův algoritmus, lematizace, parsing, slovníky.
+# 8. Principy zpracování přirozeného jazyka – tokenizace, stemming, Porterův algoritmus, lematizace, parsing, slovníky. Modely pro reprezentaci a zpracování rozsáhlých.
+nestrukturovaných dat, vektorový model dokumentu.
 - **Základní defninice:**
 	- **word** = oddělený řetězec znaků v takové formě v jaké se objevuje v textu
 	- **term** = normalizované slovo
@@ -2458,21 +2459,21 @@ $$
 ##### Příklad
 **Q1:**
 
-| Pozice | Dokument | Relevantní? | # Relevantních nalezených do této pozice | Precision   |
-| ------ | -------- | ----------- | ---------------------------------------- | ----------- |
-| 1      | D1       | ✅ Ano       | 1                                        | 1/1 = 1.00  |
-| 2      | D2       | ❌ Ne        | 1                                        |             |
-| 3      | D3       | ✅ Ano       | 2                                        | 2/3 ≈ 0.667 |
-| 4      | D5       | ❌ Ne        | 2                                        |             |
-| 5      | D4       | ✅ Ano       | 3                                        | 3/5 = 0.6   |
+| Pozice | Dokument | Relevantní a na správné pozici? | # Relevantních nalezených do této pozice | Precision   |
+| ------ | -------- | ------------------------------- | ---------------------------------------- | ----------- |
+| 1      | D1       | ✅ Ano                           | 1                                        | 1/1 = 1.00  |
+| 2      | D2       | ❌ Ne                            | 1                                        |             |
+| 3      | D3       | ✅ Ano                           | 2                                        | 2/3 ≈ 0.667 |
+| 4      | D5       | ❌ Ne                            | 2                                        |             |
+| 5      | D4       | ✅ Ano                           | 3                                        | 3/5 = 0.6   |
 **Q2:**
 
-| Pozice | Dokument | Relevantní? | # Relevantních nalezených do této pozice | Precision   |
-| ------ | -------- | ----------- | ---------------------------------------- | ----------- |
-| 1      | D5       | ❌ Ne        | 0                                        |             |
-| 2      | D4       | ✅ Ano       | 1                                        | 1/2 = 0.5   |
-| 3      | D2       | ✅ Ano       | 2                                        | 2/3 ≈ 0.667 |
-|        | D3       | ❌ Ne        | 2                                        |             |
+| Pozice | Dokument | Relevantní a na správné pozici? | # Relevantních nalezených do této pozice | Precision   |
+| ------ | -------- | ------------------------------- | ---------------------------------------- | ----------- |
+| 1      | D5       | ❌ Ne                            | 0                                        |             |
+| 2      | D4       | ✅ Ano                           | 1                                        | 1/2 = 0.5   |
+| 3      | D2       | ✅ Ano                           | 2                                        | 2/3 ≈ 0.667 |
+|        | D3       | ❌ Ne                            | 2                                        |             |
 $$
 AveP_1 = \frac{1 + \frac{1}{3} + \frac{3}{5}}{3} = 0.756
 $$
@@ -2539,7 +2540,9 @@ $$
 - Dlouhý kontext
 - Overfitting
 - Underfitting
-## Výběr vlastností
+## Výběr vlastností (Extrakce příznaků)
+- **Extrakce příznaků** = jak upravit surové data do podoby, která se pak dává do klasifikátoru
+- **Bag of Words model**
 - Dokumenty jsou znázorněny ve vysoko-dimenzionálním prostoru, kde každá dimenze odpovídá jednomu termu
 - Mnoho slov se vyskytuje jen zřídka a nemusí přinášet užitečné informace
 - Vzácnější, zavádějící (noise features) slova mohou vést k overfittingu
@@ -2554,7 +2557,7 @@ $$
 - **BoW** – pracuje s textem jako s neuspořádanou sekvencí slov
 	- *pes kousl muže* = *muž kousl psa*
 - **TF-IDF** – nastavuje důležitost slova podle jeho frekvence a vzácnosti
-- **Continuous Vectors** – slova/dokumenty jsou reprezentovány jako spojité vektory
+- **Dense Vectors** – slova/dokumenty jsou reprezentovány jako spojité vektory
 ## Příklady klasifikátorů
 ### Naivní Bayesův klasifikátor
 - **Probabilistický model:**
@@ -2683,8 +2686,8 @@ $$
 	- **Hard** = dokument spadá právě do jedné třídy
 	- **Soft** = dokument spadá s ppstí. X do jedné třídy, s ppstí. Y do druhé
 - **Flat vs Hierarchické shlukování**
-	- **Flat** = začínáme v náhodném rozpoložení, iterativně zlepšujeme (k-means)
-	- **Hierarchické** = vytváříme hierarchii shluků
+	- **Flat** = zadáváme kolik má být shluků
+	- **Hierarchické** = počet shluků se určí za běhu
 ### Algoritmy – flat
 #### K-means
 - Rychlé a jednoduché
@@ -2747,43 +2750,7 @@ $$
 		- Optimalizuje se gradientním sestupem (gradient descent).
 - ![[t-sne.excalidraw]]
 ## Extrakce informací z textů.
-- Proces automatického získávání strukturovaných dat z nestrukturovaného textu
-- Na rozdíl od vyhledávání, které vrací celé dokumenty, IE vrací konkrétní fakta
-- Dvě vrstvy:
-	- **Přípravná (Lingvistická)**
-	- **Extrakční (Sémantická)**
-### Přípravná fáze (Preprocessing a Syntaktická analýza)
-- Slouží k tomu, aby model pochopil gramatickou strukturu věty
-- Sama o sobě informace neextrahuje
-1. **Part-of-Speech Tagging (POS Tagging)**
-	- **Popis:** Označí každé slovo ve větě jeho slovním druhem
-	- **Využití:** Pomáhá dalším modelům rozlišit kontext
-2. **Syntaktická analýza (Parsing):**
-	- **Popis:** Analýza gramatické struktury vět a určení vztahů mezi slovo
-	- **Přístupy:** 
-		- Dependency parsing (strom závislostí)
-		- Constituency parsing (hierarchické frázové bloky)
-###  Extrakční fáze (Sémantická analýza)
-- Vytěžování informací
-1. **Rozpoznávání pojmenovaných entit (Named Entity Recognition – NER):**
-	- **Popis:** Identifikace a klasifikace klíčových objektů v textu
-	- **Kategorie:**
-		- Osoby
-		- Organizace
-		- Lokace
-		- Čas
-		- Částky
-2. **Vytěžování vztahů (Relation Extraction):**
-	- **Popis:** Identifikuje sémantické vztahy mezi nalezenými entitami
-		- Vztahy jsou nejčastěji reprezentovány jako triplet: `(Subjekt, Predikát, Objekt)`
-3. **Rezoluce koreference (Coreference Resolution):**
-	- **Popis:** Spojení různých výrazů a zájmen v textu, které odkazují na stejnou entitu
-4. **Extrakce událostí / Vyplňování šablon (Event Extraction / Slot Filling):**
-	- **Popis:** Komplexní naplnění předdefinované tabulky na základě určité události detekované v textu
-### Metody realizace
-1. **Regex**
-	- Rule-based přístup
-2. **ML, Statistické modely**
-	- Algoritmy (např. **CRF – Conditional Random Files** nebo neuronové sítě) berou text jako sekvenci tokenů a učí se z anotovaných dat tipovat správné značky
-3. **LLM (Zero-shot/Fer-shot)**
-	- Využití LLM
+- Uděláme shlukování
+- Pojmenujeme shluky
+- Získáme informace
+- Snažíme se z nestrukturovaných dat udělat strukturované/semi-strukturované
