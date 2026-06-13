@@ -1,3 +1,246 @@
+# 1. Definice a význam architektury software, vztah ke kvalitativním charakteristikám software. Architektonické styly, účel, jednotlivé styly, dopady na vlastnosti software.
+## Definice a význam architektury software, vztah ke kvalitativním charakteristikám software.
+- **Definice:**
+	- Sada klíčových návrhových rozhodnutí o systému
+- **Význam:**
+	- Pokrývá všechny aspekty vyvíjeného systému:
+		- Struktura
+		- Chování
+		- Interakce
+		- Nefunkční požadavky
+		- Implementace
+- **Druhy arch.**
+	- Preskriptivní (as-intended)
+	- Deskriptivní (as-planned)
+- **Degradace architektury:**
+	- Eroze
+	- Drift
+- **Základní součásti:**
+	- Komponenty
+	- Konektory
+	- Konfigurace
+- **Vztah ke kvalitativním charakteristikám:**
+	- Vztah vůči nefunkčním požadavkům
+	- SKVAŠ (Spolehlivost, Komplexita, Výkonnost, Adaptabilita, Škálovatelnost)
+	- CASED (Complexity, Adaptability, Scalability, Efficiency, Dependability)
+## Architektonické styly, účel, jednotlivé styly, dopady na vlastnosti software.
+- ![[Pasted image 20260519153033.png]]
+- **Architektonický styl** = pojmenovaná kolekce architekturálních rozhodnutí
+- **Architektonický vzor** = ověřené řešení pro konkrétní problém
+- **Styl vs. Vzor analogie:**
+	- Styl je plán města, vzor je například kruhový objezd
+- **Účel** = nabízí sadu komponent, konektorů a konfigurací, které lze využít k řešení obecného problému
+- **Příklady stylů:**
+	- Hlavní program a subrutiny
+	- **Objektově orientovaný**
+	- **Vícevrstvý**
+	- **Client-server**
+	- Pipes and filters
+	- Blackboard (sdílená paměť)
+	- Rule-Based (fakt/pravidla se vkládaj, na dotazy se odpovídá)
+# 2. Doménově specifické architektury (cloud, edge, AI, bezpečné systémy, ...), hlavní složky, dopady na vlastnosti (výkon, spolehlivost, integrace, cena, bezpečnost). Produktové řady, variabilita software na úrovni architektury. Modelem řízený vývoj (MDD, MDA) - účel a koncept, role UML, způsoby realizace.
+## Doménově specifické architektury (cloud, edge, AI, bezpečné systémy, ...), hlavní složky, dopady na vlastnosti (výkon, spolehlivost, integrace, cena, bezpečnost).
+- **Klíčové faktory:**
+	- Doména (zúžení problému)
+	- Byznys (šetření peněz)
+	- Technologie (musí být dostupné)
+- **DSSE** = řešení pouze rozdílů mezi novým systémem a již existujícím řešení
+- **Tradiční SW inženýrství:**
+	- ![[Pasted image 20260519184627.png]]
+- **SW inženýrství založené na architekturách:**
+	- ![[Pasted image 20260519184654.png]]
+- **DSSE:**
+	- ![[Pasted image 20260519184711.png]]
+- **DSSA** se skládá z:
+	- Referenční arch.
+	- Knihovny komponent
+	- Konfigurační metody
+- **Cloud arch.**
+	- **Složky:** Microservices, Kontejnery, API, Service Mesh
+	- **Dopady:**
+		- Výkon – horizontální škálování
+		- Spolehlivost – vysoká
+		- Integrace – asynchronní Event-Driven
+		- Cena – odvíjí se od počtu využitých zdrojů
+- **Edge arch.**
+	- **Složky:** Edge Nodes, Senzorové sítě, Lokální časové DB
+	- **Dopady:**
+		- Výkon – extrémně nízká latence komunikace, ale výpočetní síla uzlů je menší
+		- Spolehlivost – lokální autonomie
+		- Integrace
+			- East-West – komunikace mezi jednotlivými různými edge nodes
+			- North-South – ukládání dat do centrálního cloudu
+		- Cena – vyšší investiční náklady na lokální HW, ale úspory za síťový přenos
+		- Bezpečnost – vysoké riziko fyzického napadení uzlu
+- **AI arch.**
+	- **Složky:** Trénovací pipeline, Feature Store, DW, DL, Model Registry
+	- **Dopady:**
+		- Výkon – mnoho GPU + optimalizovaný kód
+		- Spolehlivost – křehká, datový drift
+		- Integrace – ETL
+		- Cena – velice drahé
+		- Bezpečnost – riziko data poisoning a advesarial attacks
+- **Bezpečné systémy:**
+	- **Složky:** Deterministické HW sběrnice, Mechanismy redundance
+	- **Dopady:**
+		- Výkon – omezený (žadné dymaické paměti, apod.), RTOS
+		- Spolehlivost – extrémní
+		- Integrace – téměř nemožná
+		- Cena – byrokracie kolem certifikací vývoj zdražuje
+		- Bezpečnost – Safety + Security
+## Produktové řady, variabilita software na úrovni architektury.
+- **Produktová řada** = množina souvisejících produktů s podobnými vlastnostmi
+	- ![[Pasted image 20260520202615.png]]
+- Variabilita minimální
+- Lite, Demo, Pro
+## Modelem řízený vývoj (MDD, MDA) - účel a koncept, role UML, způsoby realizace.
+- **MDD** = výsledkem vývojového procesu není kód ale model
+- **MDA** = arch. je nezávislá na platformě
+	- **Hlavní koncepty:**
+		- ![[Pasted image 20260520203917.png]]
+- **Role UML:** umožňuje z UML generovat kód
+- **Realizace:** Low Code, API First přístupy
+# 3. Modularita software, skrývání informace, koncept softwarových komponent, kontrakt. Vazby a komunikace mezi moduly, způsoby řešení závislostí, koncept a typy konektorů. Technologické realizace, vazba na konstrukce programovacích jazyků.
+## Modularita software, skrývání informace, koncept softwarových komponent, kontrakt.
+- **Modularita** = míra do jaké je systém rozdělen dekomponován do modulů
+	- SOLID
+		- Single responsibility principle
+		- Open/closed
+		- Liskov principle
+		- Interface segragation
+		- Dependency inversion
+- **Skrývání informace:**
+	- Principy:
+		1. Specifikace poskytuje vše potřebné k použití
+		2. Specifikace poskytuje vše potřené k implementaci
+		3. Specifikaci lze strojově testovat
+- **Separation of concerns** = každý dělá jen to co má
+	- AOP
+		- Aspekt = kód zapouzdřující cross-cutting concern
+		- Join point = bod během exekuce programu, kde lze "vstoupit"
+		- Pointcut = predikát definující Join points
+		- Advice = kód, který se má vykonat
+		- Weaving = spojení aspektů s cílovým kódem (compile-time, load-time, run-time)
+```Java
+// 1. CÍLOVÁ TŘÍDA (Byznys logika)
+@Service
+public class PaymentService {
+    // Metoda je prosta jakéhokoliv logování nebo měření času
+    public void zpracujPlatbu(String cisloUctu, double castka) {
+        System.out.println("Zpracovávám platbu " + castka + " pro účet " + cisloUctu);
+        // ... uložení do DB ...
+    }
+}
+
+// 2. ASPEKT (Průřezový zájem)
+@Aspect
+@Component
+public class PerformanceLoggingAspect {
+
+    // POINTCUT: Regulární výraz určující, KDY se má aspekt aplikovat.
+    // Zde: Na jakoukoliv veřejnou metodu uvnitř třídy PaymentService.
+    @Pointcut("execution(public * cz.zcu.kiv.swis.PaymentService.*(..))")
+    public void serviceMethods() {} // Prázdná metoda sloužící jako identifikátor
+
+    // ADVICE (Around): Kód, který obalí cílovou metodu (Join point)
+    @Around("serviceMethods()")
+    public Object measureExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
+        long start = System.currentTimeMillis();
+        
+        // Zde propouštíme řízení dál - zavolá se skutečná byznys metoda
+        Object proceed = joinPoint.proceed(); 
+        
+        long executionTime = System.currentTimeMillis() - start;
+        System.out.println("AOP LOG: Metoda " + joinPoint.getSignature().getName() + 
+                           " trvala " + executionTime + " ms.");
+        
+        return proceed;
+    }
+}
+```
+- **SW Komponenta** = samostatná, modulární a zaměnitelná část softwaru
+	1. Black-box
+	2. Dobře definované rozhraní
+	3. Kompozitovatelné
+- **Kontrakt** = formální dohoda mezi volajícím a volaným
+	- **Úrovně:**
+		1. Syntaktická
+		2. Behaviorální (Pre- a Post- conditions)
+		3. Synchronizace
+		4. QoS
+## Vazby a komunikace mezi moduly, způsoby řešení závislostí, koncept a typy konektorů.
+- **Vazba** = míra vzájemné závislosti mezi dvěma moduly
+	- Tight coupling = vysoká provázanost
+	- Loose coupling = nízká provázanost
+- **Typy komunikace:** synchronní, asynchronní
+- **Způsoby řešení závislostí:**
+	- **Dependency look-up**
+	- **Dependency injection**
+- **Konektor** = interakce mezi komponentami
+	- **Typy:**
+		- Procedure call (volání funkce)
+		- Event (eventy)
+		- Adaptor (komunikace mezi nekompatibilními komponentami)
+		- Arbitrator (Load Balancer)
+		- Distributor (Publisher-Subscriber)
+## Technologické realizace, vazba na konstrukce programovacích jazyků.
+- Interface
+- Dědění
+- Kompozice
+- Polymorfismus
+# 4. Způsoby dokumentace a vizualizace architektury, koncept pohledů. Analýza architektury software, ověření kvality architektury rozsáhlého softwarového systému – kritéria, metody, formy testování a přístup "executable architecture".
+## Způsoby dokumentace a vizualizace architektury, koncept pohledů.
+- **Model** = artefakt zachycující principiální arch. rozhodnutí
+- **Vizualizace** = způsob zobrazení modelu
+- Statický a Dynamický aspekt
+- **Druhy pohledů:**
+	- Bird-eye
+	- Overview
+	- Detail
+- **Druhy vazeb:**
+	- ![[Pasted image 20260522192601.png]]
+- **Kanonická vizualizace** = nejočekávanější způsob vizualizace dat
+- **View** = výsledek z **Viewpointu**
+	- **Viewpoint** = perspektiva ze které získáme view (manažer/architekt)
+- **Druhy vizualizací:**
+	- Textové
+	- Ad-hoc grafické – význam symbolů si přiřazuje tvůrce vizualizace
+	- Grafické – význam symbolů je jasně definovaný
+	- Hybrid – UML + dodatečné textové popisy
+	- Vizualizace vlivu
+	- 2.5D, 3D
+## Analýza architektury software, ověření kvality architektury rozsáhlého softwarového systému – kritéria, metody, formy testování a přístup "executable architecture".
+- **Analýza arch.** = určování vlastností systému
+	- **Model-Based** – procházíme statický model a určujeme jeho vlastnosti (např. matematická validace)
+	- **Simulation-Based** – spouštíme executable modely
+	- **Prototype-Based**
+	- **Arch. a simulační modely:**
+		- ![[Pasted image 20260523115001.png]]
+- **Evaluace arch.** = určování kvality
+	- 4C:
+		- Completeness
+			- Interní – byly namodelovány všechny prvky
+			- Externí – podporuje arch. všechny požadavky
+		- Consistency
+			- Dimenze konzistence:
+				- Název – jmenuje se komponenta pokaždý stejně
+				- Rozhraní – má komponenta pokaždý stejné rozhraní
+				- Chování – chová se komponenta pokaždé stejně
+				- Interakce – používáme komponentu správně (`open()`, `read()`, `close()`)
+				- Refinment – zachování konzistence při zdetailňování
+		- Compatibility – model splňuje požadavky a omezení na:
+			- Styl
+			- Referenční arch.
+			- Arch. standard
+		- Correctness – zaručuje, že implementace splňuje architekturu
+- **Evaluace a analýza architektury při vývoji:**
+	- **Přístupy:**
+		- Inspekce návrhu (schůzka, kde ostatní vývojáři/manažeři validují návrh, Lame Waterfall)
+		- Try before build
+		- Early risk analysis (Spirálový model)
+		- Model based (MDD)
+		- Testování a Executable architektura (xUP)
+		- Text-Implement-Refactor (Agile/TDD)
 # 5. Struktura a funkcionality operačního systému. Jádro operačního systému, účel, typy jader a rozdíly mezi nimi. Subsystémy OS. Režim jádra a uživatelský režim, příklad využití bottom half při obsluze blokujících operaci s I/O periferií.
 ## Struktura a funkcionality operačního systému.
 - OS = SW vrstva spravující HW

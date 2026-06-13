@@ -661,7 +661,7 @@
 # 5. Definice a význam architektury software, složky architektury. Vztah architektury k požadavkům, kvalitativním charakteristikám software a postupu vývoje produktu.
 ## Definice a význam architektury SW
 - **Definice:**
-	- Sada klíčových návrhových rozhodnutí a systému
+	- Sada klíčových návrhových rozhodnutí o systému
 	- Plán pro konstrukci a evoluci SW systému
 	- Co, jak, kdy
 - **Význam:**

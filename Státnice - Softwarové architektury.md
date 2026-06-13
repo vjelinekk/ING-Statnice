@@ -1,7 +1,7 @@
 # 1. Definice a význam architektury software, vztah ke kvalitativním charakteristikám software. Architektonické styly, účel, jednotlivé styly, dopady na vlastnosti software.
 ## Definice a význam architektury SW
 - **Definice:**
-	- Sada klíčových návrhových rozhodnutí a systému
+	- Sada klíčových návrhových rozhodnutí o systému
 	- Plán pro konstrukci a evoluci SW systému
 	- Co, jak, kdy
 - **Význam:**
@@ -345,12 +345,7 @@
 	- Cena – byrokracie kolem certifikací vývoj zdražuje
 	- Bezpečnost – Safety + Security
 ## Produktové řady, variabilita software na úrovni architektury.
-- **Produktová řada** = množina souvisejícíh produktů, které sdílejí podobné vlastnosti, často na úrovni architektury
-	- Velmi silný přístup v SWE
-	- Je to součástí solution space
-	- ![[Pasted image 20260520202615.png]]
-	- Např.:
-		- ![[Pasted image 20260520202700.png]]
+- **Produktová řada** = množina souvisejícíh produktů, které sdílejí ![[Pasted image 20260520202700.png]]
 ## Modelem řízený vývoj (MDD, MDA) - účel a koncept, role UML, způsoby realizace.
 - **MDD** = paradigma SWE, ve kterém primárním artefaktem vývojového procesu není zdrojový kód ale formální model
 	- Zdrojový kód je vnímám jako vedlejší produkt
@@ -443,7 +438,7 @@ public class PerformanceLoggingAspect {
 - SW může být označen jako komponenta právě tehdy když platí, že je:
 	1. Black-box SW element
 	2. Dobře definované rozhraní
-	3. Kompizotovatelné a nasaditelná třetí stranou
+	3. Kompozitovatelné a nasaditelná třetí stranou
 	4. Splňující model
 - **SW Komponentový model je:**
 	- Sémantika komponent
